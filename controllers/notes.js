@@ -3,10 +3,12 @@ const { createErrorMessage } = require('../utils/createMessage');
 
 const addNoteController = (req, res) => {
   const { title, content } = req.body;
+  const { user } = req;
 
   const newNote = {
     title,
     content,
+    userId: user._id,
   };
   NotesModel.create(newNote, (err, newDoc) => {
     if (err) {
@@ -25,8 +27,20 @@ const addNoteController = (req, res) => {
 const updateNoteWithIdController = (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
+  const { user } = req;
 
-  NotesModel.findOneAndUpdate({ _id: id }, { title, content }, (err, updatedDoc) => {
+  const filterWith = {
+    _id: id,
+    userId: user._id,
+  };
+
+  const updateContentWith = { title, content };
+
+  const updateOptions = {
+    new: true,
+  };
+
+  NotesModel.findOneAndUpdate(filterWith, updateContentWith, updateOptions, (err, updatedDoc) => {
     if (err) {
       return res.status(400).send({
         ...createErrorMessage(`NoteNotUpdatedWithId: ${id}`),

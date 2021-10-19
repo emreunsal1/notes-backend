@@ -12,9 +12,9 @@ const notesSchema = new mongoose.Schema({
 });
 
 const usersSchema = new mongoose.Schema({
+  _id: mongoose.Types.ObjectId,
   username: String,
   password: String,
-  userId: mongoose.Types.ObjectId,
 }, {
   timestamps: true,
 });

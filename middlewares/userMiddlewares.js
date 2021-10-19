@@ -17,6 +17,19 @@ const checkUserExistsMiddleware = (req, res, next) => {
   });
 };
 
+const getUserWithIdPasswordMiddleware = (req, res, next) => {
+  const { username, password } = req.body;
+
+  UsersModel.findOne({ username, password }, (err, findedUser) => {
+    if (!findedUser) {
+      return res.status(404).send(createErrorMessage('UserNotFound'));
+    }
+    req.user = findedUser;
+    return next();
+  });
+};
+
 module.exports = {
   checkUserExistsMiddleware,
+  getUserWithIdPasswordMiddleware,
 };
