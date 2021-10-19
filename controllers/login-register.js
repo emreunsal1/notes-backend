@@ -6,9 +6,9 @@ const { createJWT } = require('../utils/jwt');
 const registerController = (req, res) => {
   const { user } = req;
 
-  UsersModel.create(user, (err, registeredUser) => {
-    if (err) {
-      return res.send(createErrorMessage('An error occured when register'));
+  UsersModel.create(user, (error, registeredUser) => {
+    if (error) {
+      return res.status(400).send({ ...createErrorMessage('An error occured when register') });
     }
     return res.send(registeredUser);
   });

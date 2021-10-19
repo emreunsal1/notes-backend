@@ -29,6 +29,10 @@ const updateNoteWithIdController = (req, res) => {
   const { title, content } = req.body;
   const { user } = req;
 
+  if (!title && !content) {
+    res.send(createErrorMessage('You must send content or title field with request!'));
+  }
+
   const filterWith = {
     _id: id,
     userId: user._id,
@@ -47,6 +51,14 @@ const updateNoteWithIdController = (req, res) => {
         err,
       });
     }
+
+    if (!updatedDoc) {
+      return res.status(401).send({
+        ...createErrorMessage(`ConnotUpdate with id: ${id}`),
+        type: 'Unauthorized',
+      });
+    }
+
     return res.send({
       success: true,
       data: updatedDoc,
@@ -59,16 +71,17 @@ const getNotesController = (req, res) => {
     if (err) {
       res.send({ ...createErrorMessage('ConnotGetNotes'), err });
     }
-    res.send(docs);
+
+    return res.send(docs);
   });
 };
 
 const getNoteWithIdController = (req, res) => {
   const { id } = req.params;
 
-  NotesModel.find({ _id: id }, (err, docs) => {
+  NotesModel.findById(id, (err, docs) => {
     if (err) {
-      res.send({ ...createErrorMessage('ConnotGetNotes'), err });
+      res.status(400).send({ ...createErrorMessage('ConnotGetNotes'), err });
     }
     res.send(docs);
   });

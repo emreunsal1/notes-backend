@@ -32,7 +32,7 @@ const getUsersController = (req, res) => {
 const getUserByIdController = (req, res) => {
   const { id } = req.params;
 
-  UsersModel.findOne({ _id: id }, (err, user) => {
+  UsersModel.findById(id, (err, user) => {
     if (err) {
       return res.status(404).send({
         success: false,
