@@ -28,8 +28,9 @@ const loginController = (req, res) => {
   });
 
   res.cookie(USER_INFO_COOKIE_NAME, `${JSON.stringify(token)}`, {
-    maxAge: 900000,
     httpOnly: true,
+    sameSite: 'none',
+    secure: true,
   });
   res.send({ token });
 };

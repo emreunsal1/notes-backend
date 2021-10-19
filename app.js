@@ -1,11 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-const cors = require('cors', {
-  credentials: true,
-  origin: '*',
-});
 require('dotenv').config();
 
 const indexRouter = require('./routes');
@@ -13,7 +10,9 @@ const indexRouter = require('./routes');
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
