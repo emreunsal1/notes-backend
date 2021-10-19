@@ -27,7 +27,10 @@ const loginController = (req, res) => {
     updatedAt: user.updatedAt,
   });
 
-  res.cookie(USER_INFO_COOKIE_NAME, `${JSON.stringify(token)}`);
+  res.cookie(USER_INFO_COOKIE_NAME, `${JSON.stringify(token)}`, {
+    maxAge: 900000,
+    httpOnly: true,
+  });
   res.send({ token });
 };
 
