@@ -1,7 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const cors = require('cors');
+
+const cors = require('cors', {
+  preflightContinue: true,
+  credentials: true,
+});
 require('dotenv').config();
 
 const indexRouter = require('./routes');
