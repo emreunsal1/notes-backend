@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors', {
   preflightContinue: true,
   credentials: true,
+  origin: ['http://127.0.0.1:5500'],
 });
 require('dotenv').config();
 
