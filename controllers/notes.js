@@ -67,7 +67,13 @@ const updateNoteWithIdController = (req, res) => {
 };
 
 const getNotesController = (req, res) => {
-  NotesModel.find({}, (err, docs) => {
+  const query = {};
+
+  const { userId } = req.query;
+  if (userId) {
+    query.userId = userId;
+  }
+  NotesModel.find(query, (err, docs) => {
     if (err) {
       res.send({ ...createErrorMessage('ConnotGetNotes'), err });
     }
@@ -87,9 +93,21 @@ const getNoteWithIdController = (req, res) => {
   });
 };
 
+const getNoteWithUserIdController = (req, res) => {
+  const { userId } = req.query;
+
+  NotesModel.find({ userId }, (err, docs) => {
+    if (err) {
+      res.status(400).send({ ...createErrorMessage('ConnotGetNotes with id: ', userId), err });
+    }
+    res.send(docs);
+  });
+};
+
 module.exports = {
   addNoteController,
   getNotesController,
   updateNoteWithIdController,
   getNoteWithIdController,
+  getNoteWithUserIdController,
 };
