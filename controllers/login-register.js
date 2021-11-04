@@ -28,7 +28,7 @@ const loginController = (req, res) => {
   });
 
   res.cookie(USER_INFO_COOKIE_NAME, `${JSON.stringify(token)}`, {
-    httpOnly: true,
+    httpOnly: false,
     sameSite: 'none',
     secure: true,
   });
