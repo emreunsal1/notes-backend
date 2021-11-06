@@ -66,6 +66,29 @@ const updateNoteWithIdController = (req, res) => {
   });
 };
 
+function deleteNoteWithIdController(req, res) {
+  const { id } = req.params;
+  const { user } = req;
+
+  if (!id) {
+    return res.send(createErrorMessage('You must send id!'));
+  }
+
+  NotesModel.findByIdAndDelete({ _id: id, userId: user._id }, (err, deletedDoc) => {
+    if (err) {
+      return res.status(401).send({
+        ...createErrorMessage(`ConnotDeleteNoteWithId: ${id}`),
+        error: 'CONNOT_FIND',
+      });
+    }
+
+    return res.send({
+      success: true,
+      data: deletedDoc,
+    });
+  });
+}
+
 const getNotesController = (req, res) => {
   const query = {};
 
@@ -108,6 +131,7 @@ module.exports = {
   addNoteController,
   getNotesController,
   updateNoteWithIdController,
+  deleteNoteWithIdController,
   getNoteWithIdController,
   getNoteWithUserIdController,
 };

@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 // controllers
 const {
-  getNotesController, addNoteController, updateNoteWithIdController, getNoteWithIdController,
+  getNotesController, addNoteController, updateNoteWithIdController, getNoteWithIdController, deleteNoteWithIdController,
 } = require('../controllers/notes');
 
 // middlewares
@@ -17,6 +17,9 @@ router.get('/:id', getNoteWithIdController);
 router.post('/', authRequiredMiddleware, validateNoteMiddleware, addNoteController);
 
 // Update Note
-router.put('/:id', authRequiredMiddleware, updateNoteWithIdController);
+router.put('/:id', authRequiredMiddleware, validateNoteMiddleware, updateNoteWithIdController);
+
+// Delete Note
+router.delete('/:id', authRequiredMiddleware, deleteNoteWithIdController);
 
 module.exports = router;
