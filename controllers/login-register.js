@@ -20,7 +20,6 @@ const loginController = (req, res) => {
   delete user.password;
 
   const token = createJWT({
-    // eslint-disable-next-line no-underscore-dangle
     _id: user._id,
     username: user.username,
     createdAt: user.createdAt,
