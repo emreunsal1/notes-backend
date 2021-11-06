@@ -14,15 +14,16 @@ const getMeController = (req, res) => {
   });
 };
 
-const getMyNotesController = (req, res) => {
+const getMyNotesController = async (req, res) => {
   const userId = req.user._id;
 
-  NotesModel.find({ userId }, (err, docs) => {
-    if (err) {
-      res.status(400).send({ ...createErrorMessage('ConnotGetMyNotes with id: ', userId), err });
-    }
-    res.send(docs);
-  });
+  const query = NotesModel.find({ userId });
+  try {
+    const data = await query.sort({ updatedAt: 'desc' }).exec();
+    res.send(data);
+  } catch (err) {
+    return res.status(400).send({ ...createErrorMessage('ConnotGetMyNotes with id: ', userId), err });
+  }
 };
 
 module.exports = {
