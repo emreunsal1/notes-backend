@@ -1,6 +1,7 @@
 const { UsersModel } = require('../db');
 
 const { createErrorMessage } = require('../utils/createMessage');
+const { validateUser } = require('../utils/validation/user');
 
 const checkUserExistsMiddleware = (req, res, next) => {
   const { username, password } = req.body;
@@ -29,7 +30,18 @@ const getUserWithIdPasswordMiddleware = (req, res, next) => {
   });
 };
 
+const validateUserMiddleware = (req, res, next) => {
+  const { username, password } = req.body;
+
+  const validatedUser = validateUser({ username, password });
+  if (validatedUser.error) {
+    return res.send(createErrorMessage(validatedUser.error.message));
+  }
+  return next();
+};
+
 module.exports = {
   checkUserExistsMiddleware,
   getUserWithIdPasswordMiddleware,
+  validateUserMiddleware,
 };
