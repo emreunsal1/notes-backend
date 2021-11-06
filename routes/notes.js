@@ -2,7 +2,12 @@ const router = require('express').Router();
 
 // controllers
 const {
-  getNotesController, addNoteController, updateNoteWithIdController, getNoteWithIdController, deleteNoteWithIdController,
+  getNotesController,
+  addNoteController,
+  updateNoteWithIdController,
+  getNoteWithIdController,
+  deleteNoteWithIdController,
+  updateNoteFavoriteController,
 } = require('../controllers/notes');
 
 // middlewares
@@ -18,6 +23,7 @@ router.post('/', authRequiredMiddleware, validateNoteMiddleware, addNoteControll
 
 // Update Note
 router.put('/:id', authRequiredMiddleware, validateNoteMiddleware, updateNoteWithIdController);
+router.put('/favorite/:id', authRequiredMiddleware, updateNoteFavoriteController);
 
 // Delete Note
 router.delete('/:id', authRequiredMiddleware, deleteNoteWithIdController);

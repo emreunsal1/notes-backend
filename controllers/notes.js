@@ -1,5 +1,6 @@
 const { NotesModel } = require('../db');
 const { createErrorMessage } = require('../utils/createMessage');
+const { validateFavorite } = require('../utils/validation/note');
 
 const addNoteController = (req, res) => {
   const { title, content } = req.body;
@@ -26,25 +27,18 @@ const addNoteController = (req, res) => {
 
 const updateNoteWithIdController = (req, res) => {
   const { id } = req.params;
-  const { title, content } = req.body;
   const { user } = req;
-
-  if (!title && !content) {
-    res.send(createErrorMessage('You must send content or title field with request!'));
-  }
 
   const filterWith = {
     _id: id,
     userId: user._id,
   };
 
-  const updateContentWith = { title, content };
-
   const updateOptions = {
     new: true,
   };
 
-  NotesModel.findOneAndUpdate(filterWith, updateContentWith, updateOptions, (err, updatedDoc) => {
+  NotesModel.findOneAndUpdate(filterWith, req.body, updateOptions, (err, updatedDoc) => {
     if (err) {
       return res.status(400).send({
         ...createErrorMessage(`NoteNotUpdatedWithId: ${id}`),
@@ -127,6 +121,29 @@ const getNoteWithUserIdController = (req, res) => {
   });
 };
 
+const updateNoteFavoriteController = (req, res) => {
+  const { favorited } = req.body;
+  const { id } = req.params;
+  const { user } = req;
+  const userId = user._id;
+  const validatedData = validateFavorite({ favorited });
+
+  if (validatedData.error) {
+    return res.status(400).send(createErrorMessage(validatedData.error.message));
+  }
+
+  const favoritedValue = validatedData.value.favorited;
+  const updateQuery = { favorited: favoritedValue };
+  const findQuery = { _id: id, userId };
+
+  NotesModel.findOneAndUpdate(findQuery, updateQuery, { new: true }, (err, docs) => {
+    if (err) {
+      return res.status(401).send({ ...createErrorMessage('ConnotFavoriteThisNote with id: ', userId), err });
+    }
+    res.send({ success: true, note: docs });
+  });
+};
+
 module.exports = {
   addNoteController,
   getNotesController,
@@ -134,4 +151,5 @@ module.exports = {
   deleteNoteWithIdController,
   getNoteWithIdController,
   getNoteWithUserIdController,
+  updateNoteFavoriteController,
 };

@@ -4,12 +4,17 @@ require('dotenv').config();
 
 const { DATABASE_CONNECTION_STRING } = process.env;
 
+// mongoose.set('debug', true);
+
 const {
   notesModelName, usersModelName, notesSchema, usersSchema,
 } = require('./models');
 
 async function connectDb() {
-  await mongoose.connect(DATABASE_CONNECTION_STRING);
+  await mongoose.connect(DATABASE_CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 }
 
 connectDb().catch((error) => console.log({
