@@ -31,7 +31,6 @@ const loginController = (req, res) => {
     httpOnly: false,
     sameSite: 'none',
     expires: new Date(Date.now() + maxAge),
-    secure: true,
   });
   res.send({ token });
 };
@@ -41,7 +40,6 @@ const logOutController = (req, res) => {
     expires: new Date(new Date(Date.now() - 100)),
     httpOnly: false,
     sameSite: 'none',
-    secure: true,
   });
   res.send({ success: true });
 };
