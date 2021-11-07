@@ -35,12 +35,13 @@ const loginController = (req, res) => {
 };
 
 const logOutController = (req, res) => {
-  res.clearCookie(USER_INFO_COOKIE_NAME, {
-    path: '/*',
-    httpOnly: false,
-    sameSite: 'none',
-    secure: true,
-  });
+  // res.clearCookie(USER_INFO_COOKIE_NAME, {
+  //   path: '/*',
+  //   httpOnly: false,
+  //   sameSite: 'none',
+  //   secure: true,
+  // });
+  res.cookie(USER_INFO_COOKIE_NAME, { maxAge: 0, expires: Date.now() });
   res.send({ success: true });
 };
 
