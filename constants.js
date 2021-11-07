@@ -6,7 +6,12 @@ const noteColors = {
   PURPLE: 'purple',
 };
 
+const domainWhiteList = [
+  'https://notes-front-end-rci7cihos-emreunsal1.vercel.app/',
+];
+
 module.exports = {
   USER_INFO_COOKIE_NAME,
   noteColors,
+  domainWhiteList,
 };
