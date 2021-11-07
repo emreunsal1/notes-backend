@@ -35,7 +35,12 @@ const loginController = (req, res) => {
 };
 
 const logOutController = (req, res) => {
-  res.clearCookie(USER_INFO_COOKIE_NAME);
+  res.clearCookie(USER_INFO_COOKIE_NAME, {
+    path: '/notes',
+    httpOnly: false,
+    sameSite: 'none',
+    secure: true,
+  });
   res.send({ success: true });
 };
 
