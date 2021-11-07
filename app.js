@@ -9,6 +9,8 @@ const indexRouter = require('./routes');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 // Middlewares
 app.use(cors({
   credentials: true,
