@@ -34,7 +34,13 @@ const loginController = (req, res) => {
   res.send({ token });
 };
 
+const logOutController = (req, res) => {
+  res.clearCookie(USER_INFO_COOKIE_NAME);
+  res.send({ success: true });
+};
+
 module.exports = {
   registerController,
   loginController,
+  logOutController,
 };

@@ -20,7 +20,7 @@ const getMyNotesController = async (req, res) => {
   const query = NotesModel.find({ userId });
   try {
     const data = await query.sort({ updatedAt: 'desc' }).exec();
-    res.send(data);
+    return res.send(data);
   } catch (err) {
     return res.status(400).send({ ...createErrorMessage('ConnotGetMyNotes with id: ', userId), err });
   }
