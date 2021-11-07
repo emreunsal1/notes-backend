@@ -29,7 +29,6 @@ const loginController = (req, res) => {
   const maxAge = 36000000;
   res.cookie(USER_INFO_COOKIE_NAME, `${JSON.stringify(token)}`, {
     maxAge,
-    sameSite: 'none',
   });
   res.send({ token });
 };
@@ -37,7 +36,6 @@ const loginController = (req, res) => {
 const logOutController = (req, res) => {
   res.cookie(USER_INFO_COOKIE_NAME, '', {
     maxAge: 0,
-    sameSite: 'none',
   });
   res.send({ success: true });
 };
