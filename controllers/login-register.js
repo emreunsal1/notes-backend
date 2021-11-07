@@ -30,7 +30,7 @@ const loginController = (req, res) => {
   res.cookie(USER_INFO_COOKIE_NAME, `${JSON.stringify(token)}`, {
     maxAge,
     sameSite: 'none',
-    httpOnly: false,
+    httpOnly: true,
     secure: false,
     // expires: new Date(Date.now() + maxAge),
   });
@@ -41,7 +41,7 @@ const logOutController = (req, res) => {
   res.cookie(USER_INFO_COOKIE_NAME, '', {
     maxAge: 0,
     // expires: new Date(new Date(Date.now() - 100)),
-    httpOnly: false,
+    httpOnly: true,
     secure: false,
     sameSite: 'none',
   });
