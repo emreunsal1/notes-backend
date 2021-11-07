@@ -41,7 +41,13 @@ const logOutController = (req, res) => {
   //   sameSite: 'none',
   //   secure: true,
   // });
-  res.cookie(USER_INFO_COOKIE_NAME, '', { maxAge: 0, expires: Date.now() });
+  res.cookie(USER_INFO_COOKIE_NAME, '', {
+    maxAge: 0,
+    expires: Date.now(),
+    httpOnly: false,
+    sameSite: 'none',
+    secure: true,
+  });
   res.send({ success: true });
 };
 
