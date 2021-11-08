@@ -15,7 +15,7 @@ app.set('trust proxy', 1);
 // Middlewares
 app.use(cors({
   credentials: true,
-  origin: '*',
+  origin: domainWhiteList,
 }));
 
 app.use(bodyParser.json());
