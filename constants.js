@@ -1,4 +1,4 @@
-const USER_INFO_COOKIE_NAME = 'auth_cookie';
+const USER_INFO_COOKIE_NAME = 'authCookie';
 const noteColors = {
   RED: 'red',
   GREEN: 'green',
