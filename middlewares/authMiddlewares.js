@@ -6,7 +6,7 @@ const authRequiredMiddleware = (req, res, next) => {
   const token = req.headers[USER_INFO_COOKIE_NAME];
 
   if (!token || !token.length) {
-    return res.status(400).send(createErrorMessage('COOKIE_NOT_SENDED'));
+    return res.status(401).send(createErrorMessage('COOKIE_NOT_SENDED'));
   }
 
   try {
