@@ -9,6 +9,7 @@ const noteColors = {
 const domainWhiteList = [
   'https://notes-front-end-rci7cihos-emreunsal1.vercel.app',
   'https://notes-front-end.vercel.app',
+  'http://localhost:3000',
 ];
 
 module.exports = {
