@@ -12,7 +12,6 @@ const domainWhiteList = [
   'http://localhost:3000',
 ];
 
-
 module.exports = {
   USER_INFO_COOKIE_NAME,
   noteColors,
